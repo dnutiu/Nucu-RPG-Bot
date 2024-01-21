@@ -24,7 +24,14 @@ classifiers = [
   "Programming Language :: Python :: Implementation :: CPython",
   "Programming Language :: Python :: Implementation :: PyPy",
 ]
-dependencies = []
+dependencies = [
+  "TatSu==5.11.3"
+]
+
+[project.optional-dependencies]
+dev = [
+  "black",
+]
 
 [project.urls]
 Documentation = "https://github.com/unknown/nucuttrpgbot#readme"
