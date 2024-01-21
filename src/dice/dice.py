@@ -17,7 +17,7 @@ class DiceRoller:
     _parser = DieParser()
 
     @staticmethod
-    def roll(expression: str, advantage: typing.Optional[bool] = None) -> int:
+    def roll(expression: str, *, advantage: typing.Optional[bool] = None) -> int:
         """
         Roll die and return the result.
         :param expression: The die expression.
