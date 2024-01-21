@@ -8,31 +8,36 @@ class DieSemantics:
         return int(ast)
 
     def start(self, ast):
-        return ast.get("die")
+        return ast.get("die").get("result")
 
     def die(self, ast):
         if not isinstance(ast, AST):
             return ast
+        # the number of dies is optional; by default, we have one die
         number_of_dies = ast.get("number_of_dies") or 1
+
         die_type = ast.get("die_type")
-        die_number = ast.get("die_number") or 1
+        die_number = ast.get("die_number")
+
+        # modifier is optional, if it doesn't exist we use 0
         die_modifier = ast.get("modifier") or 0
-        if die_number <= 0:
-            return 0
-        # normal die
-        if die_type == "d":
-            die_sum = sum(
-                [random.randint(1, die_number) for _ in range(number_of_dies)]
-            )
-            # do not let die to underflow
-            return max(die_sum + die_modifier, 1)
-        # zero-based die can output 0.
+
+        minimum_value_for_die = 1
         if die_type == "zd":
-            die_sum = sum(
-                [random.randint(0, die_number) for _ in range(number_of_dies)]
-            )
-            return max(die_sum + die_modifier, 0)
-        raise ValueError(f"Invalid die type: {die_type}")
+            # zero-based die can output 0.
+            minimum_value_for_die = 0
+
+        rolls = [
+            random.randint(minimum_value_for_die, die_number)
+            for _ in range(number_of_dies)
+        ]
+
+        return {
+            "result": max(sum(rolls) + die_modifier, minimum_value_for_die),
+            "die_type": die_type,
+            "roll_history": rolls,
+            "modifier": die_modifier,
+        }
 
     def die_modifier(self, ast):
         if not isinstance(ast, AST):
