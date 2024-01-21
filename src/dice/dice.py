@@ -5,18 +5,19 @@ from src.dice.parser import DieParser
 
 class DiceRoller:
     """
-        DiceRoller is a simple class that allows you to roll dices.
+    DiceRoller is a simple class that allows you to roll dices.
 
-        A die can be rolled using the following expression:
-        - 1d20 will roll a 20-faceted die and output the result a random number between 1 and 20.
-        - 1d100 will roll a 100 faceted die.
-        - 2d20 will roll a two d20 dies and multiply the result by two.
-        - 2d20+5 will roll a two d20 dies and multiply the result by two and ads 5.
+    A die can be rolled using the following expression:
+    - 1d20 will roll a 20-faceted die and output the result a random number between 1 and 20.
+    - 1d100 will roll a 100 faceted die.
+    - 2d20 will roll a two d20 dies and multiply the result by two.
+    - 2d20+5 will roll a two d20 dies and multiply the result by two and ads 5.
     """
+
     _parser = DieParser()
 
     @staticmethod
-    def roll(expression: str, advantage: typing.Optional[bool]) -> int:
+    def roll(expression: str, advantage: typing.Optional[bool] = None) -> int:
         """
         Roll die and return the result.
         :param expression: The die expression.

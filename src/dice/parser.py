@@ -8,9 +8,9 @@ DIE_GRAMMAR = """
     @@grammar::Die
     @@whitespace :: None
 
-    start = die:die [modifier:die_modifier] $;
+    start = die:die $;
 
-    die = [number_of_dies:number] die_type:die_type die_number:number;
+    die = [number_of_dies:number] die_type:die_type die_number:number [modifier:die_modifier];
     die_modifier = op:operator modifier:number;
 
     operator = '+' | '-';
