@@ -1,36 +1,41 @@
+import logging
+
 import tatsu
 
 from src.dice.semantics import DieSemantics
 
-DIE_GRAMMAR = '''
+DIE_GRAMMAR = """
     @@grammar::Die
     @@whitespace :: None
 
-    start = [number_of_dies:number] die:die [modifier:die_modifier] $;
-    die = die_type:die_type die_number:number;
-    die_modifier = op:die_modifier_op modifier:number;
-    die_modifier_op = '+' | '-';
+    start = die:die [modifier:die_modifier] $;
+
+    die = [number_of_dies:number] die_type:die_type die_number:number;
+    die_modifier = op:operator modifier:number;
+
+    operator = '+' | '-';
+
     die_type = 'd' | 'zd';
+
     number = /[0-9]+/ ;
-'''
+"""
 
 
 class DieParser:
     """
-        Parser for the die grammar defined above.
+    Parser for the die grammar defined above.
     """
 
     def __init__(self):
         self._parser = tatsu.compile(DIE_GRAMMAR)
         self._semantics = DieSemantics()
+        self._logger = logging.getLogger("DieParser")
 
     def parse(self, expression: str) -> int:
         """
-            Parses the die expression and returns the result.
+        Parses the die expression and returns the result.
         """
         clean_expression = "".join(expression.split())
         result = self._parser.parse(clean_expression, semantics=self._semantics)
-        number_of_dies = result.get("number_of_dies") or 1
-        modifier = result.get("modifier") or 0
-        die = result.get("die")
-        return number_of_dies * die + modifier
+        logging.debug(f"rolling die for {expression} -> result={result}")
+        return result
