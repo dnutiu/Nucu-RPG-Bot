@@ -41,6 +41,6 @@ class DieParser:
             logging.debug(f"rolling die for {expression} -> result={result}")
             return result
         except tatsu.exceptions.FailedParse as e:
-            message = f"Failed to roll {expression}: {e.message}"
+            message = f"Failed to roll {expression}: {str(e)}"
             self._logger.error(message)
             raise ValueError(message) from e
