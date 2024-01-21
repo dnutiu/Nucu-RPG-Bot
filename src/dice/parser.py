@@ -35,7 +35,12 @@ class DieParser:
         """
         Parses the die expression and returns the result.
         """
-        clean_expression = "".join(expression.split())
-        result = self._parser.parse(clean_expression, semantics=self._semantics)
-        logging.debug(f"rolling die for {expression} -> result={result}")
-        return result
+        try:
+            clean_expression = "".join(expression.split())
+            result = self._parser.parse(clean_expression, semantics=self._semantics)
+            logging.debug(f"rolling die for {expression} -> result={result}")
+            return result
+        except tatsu.exceptions.FailedParse as e:
+            message = f"Failed to roll {expression}: {e.message}"
+            self._logger.error(message)
+            raise ValueError(message) from e
