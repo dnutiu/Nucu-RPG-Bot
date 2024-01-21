@@ -100,3 +100,23 @@ def test_zero_die_roll(expression, range_min, range_max, dice_roller):
     for i in range(100):
         result = dice_roller.roll(expression)
         assert range_min <= result <= range_max
+
+
+@pytest.mark.parametrize(
+    "expression",
+    [
+        "20d",
+        "d",
+        "zd",
+        "20",
+        "20+3",
+        "20q+3",
+        "123q*3",
+        "20d*3",
+        "20d20*3",
+        "20d20/3",
+    ],
+)
+def test_die_parsing_fail(expression, dice_roller):
+    with pytest.raises(ValueError):
+        dice_roller.roll(expression)
