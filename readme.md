@@ -12,4 +12,8 @@ It features:
 - ❌ Telemetry (We don't do that here)
 - ❌ Paid Content.
 
+### Screenshots
+
+![./docs/bot_dice_roll.png](./docs/bot_dice_roll.png)
+
 Made with 💞 by [nuculabs.dev](https://blog.nuculabs.dev)

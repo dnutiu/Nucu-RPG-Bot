@@ -31,6 +31,10 @@ class DieParser:
         self._semantics = DieSemantics()
         self._logger = logging.getLogger("DieParser")
 
+    @staticmethod
+    def create() -> "DieParser":
+        return DieParser()
+
     def parse(self, expression: str) -> int:
         """
         Parses the die expression and returns the result.

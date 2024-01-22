@@ -14,7 +14,7 @@ class DiceRoller:
     - 2d20+5 will roll a two d20 dies and multiply the result by two and ads 5.
     """
 
-    _parser = DieParser()
+    _parser = DieParser.create()
 
     @staticmethod
     def roll(expression: str, *, advantage: typing.Optional[bool] = None) -> int:
