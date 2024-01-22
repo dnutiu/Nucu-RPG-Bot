@@ -22,7 +22,8 @@ classifiers = [
   "Programming Language :: Python :: Implementation :: PyPy",
 ]
 dependencies = [
-  "TatSu==5.11.3"
+  "TatSu==5.11.3",
+  "disnake==2.9.1"
 ]
 
 [project.optional-dependencies]
