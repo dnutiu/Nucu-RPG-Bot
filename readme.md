@@ -8,7 +8,7 @@ It features:
 - ✅ A custom dice roller and parser. 🎲 
 - ❌ Artificial Intelligence.
 - ❌ Cooking, brewing and farming skills.
-- ❌ A discord interface, yeap we're working on that.
+- ✅ A discord interface ➕➕➕
 - ❌ Telemetry (We don't do that here)
 - ❌ Paid Content.
 
