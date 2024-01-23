@@ -12,9 +12,9 @@ class NucuBot(bot.Bot):
         self._logger = logging.getLogger(__name__)
 
     @staticmethod
-    def create() -> "NucuBot":
+    def create(command_prefix: str = ".") -> "NucuBot":
         intents = disnake.Intents.all()
-        discord_bot = NucuBot(intents=intents, command_prefix="$")
+        discord_bot = NucuBot(intents=intents, command_prefix=command_prefix)
         discord_bot.add_cog(DiceCog(discord_bot))
         return discord_bot
 

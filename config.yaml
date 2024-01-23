@@ -1,2 +1,3 @@
 discord:
+  command_prefix: "."
   token: <your discord token>
