@@ -16,9 +16,6 @@ It features:
 
 ![./docs/bot_dice_roll.png](./docs/bot_dice_roll.png)
 
-Made with 💞 by [nuculabs.dev](https://blog.nuculabs.dev)
-
-
 # Running the bot
 
 I've designed the bot to be run by yourself, and be configured via a configuration file.
@@ -33,3 +30,5 @@ Example:
 export NUCUBOT_CONFIG=/PycharmProjects/NucusTTRPGBot/secrets/config.yaml
 python -m src.main
 ```
+
+Made with 💞 by [nuculabs.dev](https://blog.nuculabs.dev)
