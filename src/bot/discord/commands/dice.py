@@ -19,7 +19,7 @@ class DiceCog(commands.Cog):
         for index, die in enumerate(die_result.dies):
             roll_fields.append(
                 (
-                    f"- #{index+1} 🎲 ",
+                    f"- #{index+1} 🎲 {die.type}{die.die_number}",
                     f"Res: {die.result}, Mod: {die.modifier}, Rolls: {die.rolls}",
                 )
             )
@@ -47,7 +47,7 @@ class DiceCog(commands.Cog):
             die_result: DieExpressionResult = DiceRoller.roll(dice_expression)
 
             embed = disnake.Embed(
-                title="",
+                title=f"{die_result.total} !!",
                 description=f"{dice_expression} = {die_result.total}",
                 timestamp=datetime.now(),
             )

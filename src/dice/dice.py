@@ -13,6 +13,7 @@ class DieRollResult:
     result: int
     modifier: int
     rolls: typing.List[int]
+    die_number: int
     type: str
 
 
@@ -66,6 +67,7 @@ class DiceRoller:
                     result=die.get("result"),
                     rolls=die.get("rolls"),
                     type=die.get("type"),
+                    die_number=die.get("die_number"),
                 )
             )
         return DieExpressionResult(total=result.get("total"), dies=dies)

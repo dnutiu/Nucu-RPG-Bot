@@ -8,12 +8,14 @@ DIE_GRAMMAR = """
     @@grammar::Die
     @@whitespace :: None
 
-    start = die:die ~ {op:operator die:die} $;
+    start = die:die {op:operator die:die} $;
 
     die = [number_of_dies:number] die_type:die_type die_number:number [modifier:die_modifier];
-    die_modifier = op:operator modifier:number;
-
-    operator = '+' | '-' | 'adv' | 'dis';
+    die_modifier = op:modifier_operator modifier:number;
+    
+    
+    modifier_operator = '+' | '-';
+    operator = 'add' | 'sub' | 'adv' | 'dis';
 
     die_type = 'd' | 'zd';
 

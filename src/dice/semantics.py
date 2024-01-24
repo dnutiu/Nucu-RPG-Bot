@@ -27,9 +27,9 @@ class DieSemantics:
                 right = die_results.popleft()
                 operator = operators.popleft()
                 total = 0
-                if operator == "+":
+                if operator == "add":
                     total = left + right
-                if operator == "-":
+                if operator == "sub":
                     total = left - right
                 if operator == "adv":
                     total = max(left, right)
@@ -64,6 +64,7 @@ class DieSemantics:
 
         return {
             "result": max(sum(rolls) + die_modifier, minimum_value_for_die),
+            "die_number": die_number,
             "type": die_type,
             "rolls": rolls,
             "modifier": die_modifier,

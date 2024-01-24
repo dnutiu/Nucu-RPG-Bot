@@ -59,6 +59,29 @@ def test_die_roller_die_roll_simple(expression, range_min, range_max, dice_rolle
     "expression, range_min, range_max",
     [
         # normal roll
+        ("d20 add d20", 1, 40),
+        ("d20+0 add d20", 1, 40),
+        ("d20+0 adv d20", 1, 20),
+        ("d20+0 adv 2d20", 1, 40),
+        ("d20+0 adv 2zd20", 1, 40),
+        ("d20+0 dis 2d12", 1, 20),
+        ("d20+0 add 2d20+2", 1, 62),
+        ("zd20+0 add 2d20+2", 1, 62),
+    ],
+)
+def test_die_roller_die_roll_compound_simple(
+    expression, range_min, range_max, dice_roller
+):
+    # let the dies roll...
+    for i in range(100):
+        result = dice_roller.roll_simple(expression)
+        assert range_min <= result <= range_max
+
+
+@pytest.mark.parametrize(
+    "expression, range_min, range_max",
+    [
+        # normal roll
         ("zd20", 0, 20),
         ("zd12", 0, 12),
         ("zd10", 0, 10),
@@ -124,6 +147,6 @@ def test_die_roller_die_parsing_fail(expression, dice_roller):
 
 def test_die_roller_roll(dice_roller):
     for i in range(100):
-        result = dice_roller.roll("d20 + d20 adv d20+5 dis d12+3")
+        result = dice_roller.roll("d20 add d20 adv d20+5 dis d12+3")
         assert 1 <= result.total <= 15
         assert len(result.dies) == 4
