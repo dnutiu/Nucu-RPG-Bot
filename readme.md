@@ -1,4 +1,4 @@
-# Nucu's TTRPG Bot
+# Nucu's RPG Tools
 
 ⚠️ _Currently under development_
 
@@ -19,7 +19,7 @@ It features:
 # Running the bot
 
 I've designed the bot to be run by yourself, and be configured via a configuration file.
-
+pyenv
 You can view the configuration file example in the project's root under the name [config.yaml](config.yaml). 
 The configuration file's location is the current directory and can be configured to something else with the 
 following environment variable:
@@ -30,5 +30,7 @@ Example:
 export NUCUBOT_CONFIG=/PycharmProjects/NucusTTRPGBot/secrets/config.yaml
 python -m src.main
 ```
+
+# Running the bot on Raspberry PI
 
 Made with 💞 by [nuculabs.dev](https://blog.nuculabs.dev)
