@@ -18,7 +18,7 @@ class YamlConfigSettingsSource(PydanticBaseSettingsSource):
     at the project's root.
 
     Here we happen to choose to use the `env_file_encoding` from Config
-    when reading `config.json`
+    when reading `config.yaml`
     """
 
     @functools.lru_cache
@@ -59,11 +59,19 @@ class YamlConfigSettingsSource(PydanticBaseSettingsSource):
 
 
 class DiscordSettings(BaseModel):
+    """
+    Holds all the settings needed to configure the bot for Discord usage.
+    """
+
     token: str = Field()
     command_prefix: str = Field(default=".")
 
 
 class Settings(BaseSettings):
+    """
+    Settings class for the bot
+    """
+
     discord: DiscordSettings
 
     @classmethod

@@ -8,12 +8,12 @@ DIE_GRAMMAR = """
     @@grammar::Die
     @@whitespace :: None
 
-    start = die:die $;
+    start = die:die ~ {op:operator die:die} $;
 
     die = [number_of_dies:number] die_type:die_type die_number:number [modifier:die_modifier];
     die_modifier = op:operator modifier:number;
 
-    operator = '+' | '-';
+    operator = '+' | '-' | 'adv' | 'dis';
 
     die_type = 'd' | 'zd';
 
@@ -35,7 +35,7 @@ class DieParser:
     def create() -> "DieParser":
         return DieParser()
 
-    def parse(self, expression: str) -> int:
+    def parse(self, expression: str) -> dict:
         """
         Parses the die expression and returns the result.
         """

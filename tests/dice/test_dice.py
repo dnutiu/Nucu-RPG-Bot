@@ -48,10 +48,10 @@ def dice_roller():
         ("1d 4 +0", 1, 4),
     ],
 )
-def test_die_roller_die_roll(expression, range_min, range_max, dice_roller):
+def test_die_roller_die_roll_simple(expression, range_min, range_max, dice_roller):
     # let the dies roll...
     for i in range(100):
-        result = dice_roller.roll(expression)
+        result = dice_roller.roll_simple(expression)
         assert range_min <= result <= range_max
 
 
@@ -95,10 +95,10 @@ def test_die_roller_die_roll(expression, range_min, range_max, dice_roller):
         ("1zd 4 +0", 0, 4),
     ],
 )
-def test_die_roller_zero_die_roll(expression, range_min, range_max, dice_roller):
+def test_die_roller_zero_die_roll_simple(expression, range_min, range_max, dice_roller):
     # let the dies roll...
     for i in range(100):
-        result = dice_roller.roll(expression)
+        result = dice_roller.roll_simple(expression)
         assert range_min <= result <= range_max
 
 
@@ -119,14 +119,11 @@ def test_die_roller_zero_die_roll(expression, range_min, range_max, dice_roller)
 )
 def test_die_roller_die_parsing_fail(expression, dice_roller):
     with pytest.raises(ValueError):
-        dice_roller.roll(expression)
+        dice_roller.roll_simple(expression)
 
 
-def test_die_roller_roll_with_advantage(dice_roller):
-    assert 1 <= dice_roller.roll_with_advantage("d20") <= 20
-    assert 1 <= dice_roller.roll("d20", advantage=True) <= 20
-
-
-def test_die_roller_roll_with_disadvantage(dice_roller):
-    assert 1 <= dice_roller.roll_with_advantage("d20") <= 20
-    assert 1 <= dice_roller.roll("d20", advantage=False) <= 20
+def test_die_roller_roll(dice_roller):
+    for i in range(100):
+        result = dice_roller.roll("d20 + d20 adv d20+5 dis d12+3")
+        assert 1 <= result.total <= 15
+        assert len(result.dies) == 4

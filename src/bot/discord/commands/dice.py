@@ -16,11 +16,13 @@ class DiceCog(commands.Cog):
         - 2d20 will roll a two d20 dies and multiply the result by two.
         - 2d20+5 will roll a two d20 dies and multiply the result by two and ads 5.
         """
+        if dice_expression == "":
+            return
         if dice_expression == "0/0":  # easter eggs
             return await ctx.send("What do you expect me to do, destroy the universe?")
 
         try:
-            roll_result = DiceRoller.roll(dice_expression)
+            roll_result = DiceRoller.roll_simple(dice_expression)
             await ctx.send(f"You rolled: {roll_result}")
         except ValueError as e:
             await ctx.send(f"Roll failed: {e}")

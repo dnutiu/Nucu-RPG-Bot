@@ -1,4 +1,6 @@
+import copy
 import random
+from collections import deque
 from tatsu.ast import AST
 
 
@@ -8,7 +10,32 @@ class DieSemantics:
         return int(ast)
 
     def start(self, ast):
-        return ast.get("die").get("result")
+        die = ast.get("die")
+        if isinstance(die, dict):
+            return {"total": die.get("result"), "dies": [die]}
+        elif isinstance(die, list):
+            return_value = {"total": 0, "dies": copy.deepcopy(die)}
+            operators = deque(ast.get("op", []))
+
+            die_results = deque(map(lambda x: x.get("result"), die))
+            # Note: we may need to use a dequeue, the ops are quite inefficient.
+            while len(die_results) != 1:
+                left = die_results.popleft()
+                right = die_results.popleft()
+                operator = operators.popleft()
+                total = 0
+                if operator == "+":
+                    total = left + right
+                if operator == "-":
+                    total = left - right
+                if operator == "adv":
+                    total = max(left, right)
+                if operator == "dis":
+                    total = min(left, right)
+                die_results.appendleft(total)
+
+            return_value["total"] = die_results.pop()
+            return return_value
 
     def die(self, ast):
         if not isinstance(ast, AST):
@@ -34,8 +61,8 @@ class DieSemantics:
 
         return {
             "result": max(sum(rolls) + die_modifier, minimum_value_for_die),
-            "die_type": die_type,
-            "roll_history": rolls,
+            "type": die_type,
+            "rolls": rolls,
             "modifier": die_modifier,
         }
 
