@@ -2,8 +2,8 @@ from src.bot.discord.commands.dice import DiceCog
 from src.dice.dice import DieExpressionResult, DieRollResult
 
 
-def test_format_die_result_to_message():
-    message = DiceCog.format_die_result_to_fields(
+def test_format_embed_fields():
+    message = DiceCog._format_embed_fields(
         DieExpressionResult(
             total=25,
             dies=[

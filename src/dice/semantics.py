@@ -45,6 +45,8 @@ class DieSemantics:
             return ast
         # the number of dies is optional; by default, we have one die
         number_of_dies = ast.get("number_of_dies") or 1
+        if number_of_dies > 10_000:
+            raise ValueError("invalid number of dies must be <= 10_000.")
 
         die_type = ast.get("die_type")
         die_number = ast.get("die_number")

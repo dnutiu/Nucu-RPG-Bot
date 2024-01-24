@@ -3,6 +3,7 @@ from datetime import datetime
 
 import disnake
 from disnake.ext import commands
+from disnake.ext.commands import CommandInvokeError
 
 from src.dice.dice import DiceRoller, DieExpressionResult
 
@@ -12,7 +13,7 @@ class DiceCog(commands.Cog):
         self.bot = bot
 
     @staticmethod
-    def format_die_result_to_fields(
+    def _format_embed_fields(
         die_result: DieExpressionResult,
     ) -> list[typing.Tuple[str, str]]:
         roll_fields = []
@@ -51,9 +52,21 @@ class DiceCog(commands.Cog):
                 description=f"{dice_expression} = {die_result.total}",
                 timestamp=datetime.now(),
             )
-            embed_fields = self.format_die_result_to_fields(die_result)
-            for title, value in embed_fields:
-                embed.add_field(title, value, inline=False)
+            embed_fields = self._format_embed_fields(die_result)
+            exceeded_value = False
+            for title, value in embed_fields[:20]:
+                if len(value) > 1024:
+                    exceeded_value = True
+                    embed.add_field(title, f"{value[:1020]}...", inline=False)
+                else:
+                    embed.add_field(title, value, inline=False)
+
+            # handle large rolls
+            if len(embed_fields) > 20 or exceeded_value:
+                embed.add_field(
+                    "huuuuge 🎲",
+                    "Due to technical limitations only first 20 partial-rolls are shown.",
+                )
 
             await ctx.send(
                 f"The mighty **{ctx.author.name}** has rolled the dice for a total of **{die_result.total}**!",
@@ -61,3 +74,5 @@ class DiceCog(commands.Cog):
             )
         except ValueError as e:
             await ctx.send(f"Roll failed: {e}")
+        except CommandInvokeError as e:
+            await ctx.send(f"Command failed: {e}")
