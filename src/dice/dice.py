@@ -57,4 +57,15 @@ class DiceRoller:
         :return: The die result.
         """
         result = DiceRoller._parser.parse(expression)
-        return DieExpressionResult(**result)
+
+        dies = []
+        for die in result.get("dies", []):
+            dies.append(
+                DieRollResult(
+                    modifier=die.get("modifier", 0),
+                    result=die.get("result"),
+                    rolls=die.get("rolls"),
+                    type=die.get("type"),
+                )
+            )
+        return DieExpressionResult(total=result.get("total"), dies=dies)

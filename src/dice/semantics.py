@@ -15,7 +15,10 @@ class DieSemantics:
             return {"total": die.get("result"), "dies": [die]}
         elif isinstance(die, list):
             return_value = {"total": 0, "dies": copy.deepcopy(die)}
-            operators = deque(ast.get("op", []))
+            operators = ast.get("op", [])
+            if not isinstance(operators, list):
+                operators = [operators]
+            operators = deque(operators)
 
             die_results = deque(map(lambda x: x.get("result"), die))
             # Note: we may need to use a dequeue, the ops are quite inefficient.
