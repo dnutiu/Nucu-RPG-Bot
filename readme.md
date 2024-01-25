@@ -39,7 +39,7 @@ To run this bot on your Raspberry PI device you will need to:
 1. Clone this repo:
 
 ```shell
-git clone git@github.com:dnutiu/Nucu-RPG-Bot.git
+git clone https://github.com/dnutiu/Nucu-RPG-Bot.git
 ```
 
 2. Install Python 3.11+. I use [pyenv](https://github.com/pyenv/pyenv/wiki).
