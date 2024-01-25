@@ -12,6 +12,31 @@ class DiceCog(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
+    def _get_dice_result_embed(self, dice_expression, die_result):
+        """
+        Returns the dice result embed.
+        """
+        embed = disnake.Embed(
+            title=f"{die_result.total} !!",
+            description=f"{dice_expression} = {die_result.total}",
+            timestamp=datetime.now(),
+        )
+        embed_fields = self._format_embed_fields(die_result)
+        exceeded_value = False
+        for title, value in embed_fields[:20]:
+            if len(value) > 1024:
+                exceeded_value = True
+                embed.add_field(title, f"{value[:1020]}...", inline=False)
+            else:
+                embed.add_field(title, value, inline=False)
+        # handle large rolls
+        if len(embed_fields) > 20 or exceeded_value:
+            embed.add_field(
+                "huuuuge 🎲",
+                "Due to technical limitations only first 20 partial-rolls are shown.",
+            )
+        return embed
+
     @staticmethod
     def _format_embed_fields(
         die_result: DieExpressionResult,
@@ -47,27 +72,53 @@ class DiceCog(commands.Cog):
 
             die_result: DieExpressionResult = DiceRoller.roll(dice_expression)
 
-            embed = disnake.Embed(
-                title=f"{die_result.total} !!",
-                description=f"{dice_expression} = {die_result.total}",
-                timestamp=datetime.now(),
+            embed = self._get_dice_result_embed(dice_expression, die_result)
+            await ctx.send(
+                f"The mighty **{ctx.author.name}** has rolled the dice for a total of **{die_result.total}**!",
+                embed=embed,
             )
-            embed_fields = self._format_embed_fields(die_result)
-            exceeded_value = False
-            for title, value in embed_fields[:20]:
-                if len(value) > 1024:
-                    exceeded_value = True
-                    embed.add_field(title, f"{value[:1020]}...", inline=False)
-                else:
-                    embed.add_field(title, value, inline=False)
+        except ValueError as e:
+            await ctx.send(f"Roll failed: {e}")
+        except CommandInvokeError as e:
+            await ctx.send(f"Command failed: {e}")
 
-            # handle large rolls
-            if len(embed_fields) > 20 or exceeded_value:
-                embed.add_field(
-                    "huuuuge 🎲",
-                    "Due to technical limitations only first 20 partial-rolls are shown.",
-                )
+    @commands.command(name="roll_advantage", aliases=["ra"])
+    async def roll_advantage(self, ctx, dice_expression: str):
+        """
+        Rolls a simple die with advantage
+        """
+        try:
+            if dice_expression == "":
+                return
 
+            die_result: DieExpressionResult = DiceRoller.roll(
+                f"{dice_expression} adv {dice_expression}"
+            )
+
+            embed = self._get_dice_result_embed(dice_expression, die_result)
+            await ctx.send(
+                f"The mighty **{ctx.author.name}** has rolled the dice for a total of **{die_result.total}**!",
+                embed=embed,
+            )
+        except ValueError as e:
+            await ctx.send(f"Roll failed: {e}")
+        except CommandInvokeError as e:
+            await ctx.send(f"Command failed: {e}")
+
+    @commands.command(name="roll_disadvantage", aliases=["rd"])
+    async def roll_disadvantage(self, ctx, dice_expression: str):
+        """
+        Rolls a simple die with disadvantage
+        """
+        try:
+            if dice_expression == "":
+                return
+
+            die_result: DieExpressionResult = DiceRoller.roll(
+                f"{dice_expression} dis {dice_expression}"
+            )
+
+            embed = self._get_dice_result_embed(dice_expression, die_result)
             await ctx.send(
                 f"The mighty **{ctx.author.name}** has rolled the dice for a total of **{die_result.total}**!",
                 embed=embed,
