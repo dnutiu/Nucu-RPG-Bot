@@ -6,7 +6,9 @@ from src.bot.discord.bot import NucuBot
 
 def main():
     settings = Settings()
-    bot = NucuBot.create(command_prefix=settings.discord.command_prefix)
+    bot = NucuBot.create(
+        command_prefix=settings.discord.command_prefix, game_name=settings.game_name
+    )
     bot.run(settings.discord.token)
 
 

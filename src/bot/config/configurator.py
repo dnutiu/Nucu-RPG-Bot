@@ -63,6 +63,7 @@ class DiscordSettings(BaseModel):
     Holds all the settings needed to configure the bot for Discord usage.
     """
 
+    game_name: str = Field(default="RPG")
     token: str = Field()
     command_prefix: str = Field(default=".")
 
