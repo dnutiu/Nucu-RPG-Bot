@@ -9,6 +9,7 @@ def main():
     bot = NucuBot.create(
         command_prefix=settings.discord.command_prefix,
         game_name=settings.discord.game_name,
+        test_guilds=settings.discord.test_guilds,
     )
     bot.run(settings.discord.token)
 

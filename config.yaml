@@ -1,4 +1,5 @@
 discord:
   game_name: "Pathfinder 2E"
+  test_guilds: []
   command_prefix: "."
   token: <your discord token>

@@ -66,6 +66,7 @@ class DiscordSettings(BaseModel):
     game_name: str = Field(default="RPG")
     token: str = Field()
     command_prefix: str = Field(default=".")
+    test_guilds: list[int] = Field(default=[])
 
 
 class Settings(BaseSettings):
