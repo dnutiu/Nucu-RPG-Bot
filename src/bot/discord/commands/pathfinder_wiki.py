@@ -17,7 +17,7 @@ class PathfinderWikiCog(commands.Cog):
         self.bot = bot
 
     @commands.slash_command(
-        name="pwiki-lookup", description="Lookup a Pathfinder wiki page."
+        name="pf-wiki-lookup", description="Lookup a Pathfinder wiki page."
     )
     async def lookup(
         self,
