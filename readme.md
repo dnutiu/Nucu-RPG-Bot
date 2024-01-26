@@ -54,7 +54,6 @@ I use the following permissions:
 6. Run `python -m src.main`
 7. Invite the bot to your Discord server.
 
-
 ---
 
 Made with 💞 by [nuculabs.dev](https://blog.nuculabs.dev)
