@@ -24,5 +24,5 @@ class PathfinderWikiCog(commands.Cog):
         inter: disnake.ApplicationCommandInteraction,
         query: str = commands.Param(autocomplete=pathfinder_wiki_lookup_autocomplete),
     ):
-        wiki_link = PathfinderWikiClient.get_wiki_page_url(query)
+        wiki_link = PathfinderWikiClient.get_page_link(query)
         await inter.send(f"@{inter.author} here's the wiki link: {wiki_link}")

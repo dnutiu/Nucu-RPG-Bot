@@ -56,7 +56,7 @@ class PathfinderWikiClient:
             return list(map(_convert_to_page, result.get("pages", [])))
 
     @staticmethod
-    def get_wiki_page_url(page_key) -> str:
+    def get_page_link(page_key) -> str:
         return f"https://pathfinderwiki.com/wiki/{page_key}"
 
     async def close(self):
@@ -66,6 +66,6 @@ class PathfinderWikiClient:
 if __name__ == "__main__":
     pf = PathfinderWikiClient()
     asyncio.run(pf.search_pages("zom"))
-    print(pf.get_wiki_page_url("zombie_lord"))
+    print(pf.get_page_link("zombie_lord"))
 
     asyncio.run(pf.close())
