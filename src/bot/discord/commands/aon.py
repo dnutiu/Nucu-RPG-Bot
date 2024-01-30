@@ -1,10 +1,13 @@
+"""
+    Pathfinder Archive of Nethys (AON) commands.
+"""
 import datetime
 
 import disnake
 import re
 from disnake.ext import commands
 
-from src.knowledge.pathfinder_archive_of_nethys import PathfinderArchiveOfNethysClient
+from src.knowledge.pathfinder.archive_of_nethys import ArchiveOfNethysClient
 
 
 async def pathfinder_aon_lookup_autocomplete(
@@ -13,7 +16,7 @@ async def pathfinder_aon_lookup_autocomplete(
     """
     Autocompletes pathfinder archive of nethys queries.
     """
-    async with PathfinderArchiveOfNethysClient() as aon_client:
+    async with ArchiveOfNethysClient() as aon_client:
         if user_input == "":
             return [
                 "(archetype-182) Zombie",
@@ -59,7 +62,7 @@ class PathfinderArchiveOfNethysCog(commands.Cog):
         """
         Looks up a page on Archive of Nethys.
         """
-        async with PathfinderArchiveOfNethysClient() as aon_client:
+        async with ArchiveOfNethysClient() as aon_client:
             match = re.match(self._id_regex, query)
             if match:
                 data = await aon_client.search_page_by_id(document_id=match.groups()[0])

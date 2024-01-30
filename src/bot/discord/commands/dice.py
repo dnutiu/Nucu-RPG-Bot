@@ -1,3 +1,6 @@
+"""
+    Dice commands.
+"""
 import typing
 from datetime import datetime
 

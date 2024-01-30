@@ -6,7 +6,7 @@ import aiohttp
 
 
 @dataclasses.dataclass
-class PathfinderArchiveOfNethysDocument:
+class ArchiveOfNethysDocument:
     """
     Represents an essential document for Archive of Nethys.
     """
@@ -17,7 +17,7 @@ class PathfinderArchiveOfNethysDocument:
     url: str
 
 
-class PathfinderArchiveOfNethysClient:
+class ArchiveOfNethysClient:
     """
     Simple PathfinderWikiClient
     """
@@ -38,7 +38,7 @@ class PathfinderArchiveOfNethysClient:
 
     async def search_page_by_id(
         self, document_id: str
-    ) -> typing.Optional[PathfinderArchiveOfNethysDocument]:
+    ) -> typing.Optional[ArchiveOfNethysDocument]:
         """
             Searches the Archive of Nethys by an id.
         :param document_id: - The document id.
@@ -66,7 +66,7 @@ class PathfinderArchiveOfNethysClient:
         ) as response:
             result = await response.json()
             for item in result.get("hits", {}).get("hits", []):
-                return PathfinderArchiveOfNethysDocument(
+                return ArchiveOfNethysDocument(
                     id=item.get("_id"),
                     name=item.get("fields", {}).get("name", ["Unknown"])[0],
                     text=item.get("fields", {}).get("text", ["Unknown"])[0],
@@ -75,7 +75,7 @@ class PathfinderArchiveOfNethysClient:
 
     async def search_pages(
         self, query: str, size: int = 10
-    ) -> list[PathfinderArchiveOfNethysDocument]:
+    ) -> list[ArchiveOfNethysDocument]:
         """
             Searches the Archive of Nethys pages
         :param query: The search query.
@@ -103,7 +103,7 @@ class PathfinderArchiveOfNethysClient:
             result = await response.json()
             for item in result.get("hits", {}).get("hits", []):
                 found_items.append(
-                    PathfinderArchiveOfNethysDocument(
+                    ArchiveOfNethysDocument(
                         id=item.get("_id"),
                         name=item.get("fields", {}).get("name", ["Unknown"])[0],
                         text=item.get("fields", {}).get("text", ["Unknown"])[0],
@@ -124,7 +124,7 @@ class PathfinderArchiveOfNethysClient:
 
 
 if __name__ == "__main__":
-    pf = PathfinderArchiveOfNethysClient()
+    pf = ArchiveOfNethysClient()
     result = asyncio.run(pf.search_pages("zom"))
     print(result)
     for item in result:

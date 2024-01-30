@@ -1,7 +1,10 @@
+"""
+    Pathfinder Wiki commands.
+"""
 import disnake
 from disnake.ext import commands
 
-from src.knowledge.pathfinder_wiki import PathfinderWikiClient
+from src.knowledge.pathfinder.wiki import PathfinderWikiClient
 
 
 async def pathfinder_wiki_lookup_autocomplete(
