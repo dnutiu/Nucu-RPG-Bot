@@ -4,6 +4,7 @@ import disnake
 from disnake.ext.commands import bot
 
 from src.bot.discord.commands.dice import DiceCog
+from src.bot.discord.commands.pathfinder_aon import PathfinderArchiveOfNethysCog
 from src.bot.discord.commands.pathfinder_wiki import PathfinderWikiCog
 
 
@@ -25,6 +26,7 @@ class NucuBot(bot.Bot):
         )
         discord_bot.add_cog(DiceCog(discord_bot))
         discord_bot.add_cog(PathfinderWikiCog(discord_bot))
+        discord_bot.add_cog(PathfinderArchiveOfNethysCog(discord_bot))
         return discord_bot
 
     async def on_ready(self):

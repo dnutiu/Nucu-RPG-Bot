@@ -60,6 +60,9 @@ class PathfinderWikiClient:
         return f"https://pathfinderwiki.com/wiki/{page_key}"
 
     async def close(self):
+        """
+        Closes the client.
+        """
         await self.session.close()
 
 
